@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigQuery Release Notes Explorer & Twitter Sharer</title>
+    <meta name="description" content="Explore BigQuery release notes, filter updates by categories, and easily draft and share them on Twitter/X.">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-title-container">
+                <div class="logo-icon" aria-hidden="true">
+                    <i class="fab fa-google"></i>
+                </div>
+                <div>
+                    <h1>BigQuery Release Notes</h1>
+                    <div class="header-subtitle">Track, filter, and share Google Cloud BigQuery updates</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="refresh-btn" class="refresh-btn" title="Refresh Release Notes" aria-label="Refresh notes">
+                    <i class="fas fa-sync-alt" aria-hidden="true"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Controls panel -->
+        <section class="controls-panel" aria-label="Search and Filter Controls">
+            <div class="search-box">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input type="text" id="search-input" placeholder="Search updates (e.g. TimesFM, billing, reservation)..." aria-label="Search release notes">
+            </div>
+            
+            <div class="filters" role="group" aria-label="Filter by release note type">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="features">Features</button>
+                <button class="filter-btn" data-filter="changes">Changes</button>
+                <button class="filter-btn" data-filter="fixes">Fixes</button>
+            </div>
+        </section>
+
+        <!-- Timeline / Content Area -->
+        <main id="timeline-container" aria-live="polite">
+            <!-- Dynamically populated via JavaScript -->
+        </main>
+    </div>
+
+    <!-- Floating Action Bar for multi-select sharing -->
+    <div id="floating-bar" class="floating-bar" aria-live="polite">
+        <div class="floating-bar-info">
+            <span id="selected-count">0</span> updates selected
+        </div>
+        <div class="floating-bar-actions">
+            <button id="deselect-all-btn" class="btn btn-secondary btn-sm">Deselect All</button>
+            <button id="tweet-selected-btn" class="btn btn-twitter btn-sm">
+                <i class="fab fa-x-twitter"></i> Tweet Selected
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal for composing/editing the Tweet -->
+    <div id="tweet-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 id="modal-title"><i class="fab fa-x-twitter"></i> Compose Tweet</h3>
+                <button id="modal-close" class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Review and customize your update details before posting on X/Twitter:</p>
+                <div class="tweet-textarea-container">
+                    <textarea id="tweet-textarea" class="tweet-textarea" aria-label="Tweet Content"></textarea>
+                    <div id="char-counter" class="character-counter">0 / 280</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-tweet-btn" class="btn btn-secondary">Cancel</button>
+                <button id="send-tweet-btn" class="btn btn-twitter">
+                    <i class="fab fa-x-twitter"></i> Post to X
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript code -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
